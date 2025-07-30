@@ -17,6 +17,14 @@
     input.dispatchEvent(new Event('blur', { bubbles: true }));
   }
 
+  function setValueByName(fieldName, value) {
+    const input = document.getElementsByName(fieldName)[0];
+    if (!input) return;
+    input.value = value;
+    const event = new Event('change');
+    input.dispatchEvent(event);
+  }
+
   function setDropdown(dropdown, value) {
     if (!dropdown) return;
     let select = null;
@@ -133,6 +141,14 @@
   }
 
   function fillGeneric() {
+    const namedFields = {
+      'form.passengers.ADT-0.name': passenger.firstName,
+      'form.passengers.ADT-0.surname': passenger.lastName,
+      'form.passengers.ADT-0.email': passenger.email,
+      'form.passengers.ADT-0.phone': passenger.phone
+    };
+    Object.entries(namedFields).forEach(([n, v]) => setValueByName(n, v));
+
     const selectors = [
       ["input[name*='first']", "input[placeholder*='First']"],
       ["input[name*='last']", "input[placeholder*='Last']"],
