@@ -19,12 +19,6 @@
       "matches": ["*://*.hotelston.com/*"],
       "js": ["common.js", "hotelston.js"],
       "run_at": "document_idle"
-    },
-    {
-      "matches": ["<all_urls>"],
-      "exclude_matches": ["*://*.ryanair.com/*", "*://*.wizzair.com/*", "*://*.hotelston.com/*"],
-      "js": ["common.js", "generic.js"],
-      "run_at": "document_idle"
     }
   ]
 }
