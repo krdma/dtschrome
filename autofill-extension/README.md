@@ -11,6 +11,10 @@ This extension adds a floating button to booking pages on **Ryanair** and **Wizz
 Visit a booking page on `ryanair.com` or `wizzair.com`. A **Fill Passenger Info** button will appear in the bottom-right corner of the page. Clicking it fills the passenger forms with test data. On Ryanair, the script selects title and gender dropdowns as if a user interacted with them. The script targets the `data-ref` fields for passenger details and contact information. On WizzAir, it falls back to common field names.
 
 The extension uses placeholder test data that can be modified in `content.js`.
+Five sample passengers are defined (three adults and two children). When the
+**Fill Passenger Info** button is clicked, the script fills up to five passenger
+forms with these unique details. Contact information is taken from the first
+adult passenger.
 
 The script also checks for fields with full name attributes like
 `form.passengers.ADT-0.name` and fills them directly, dispatching a `change`
