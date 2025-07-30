@@ -16,6 +16,13 @@ Five sample passengers are defined (three adults and two children). When the
 forms with these unique details. Contact information is taken from the first
 adult passenger.
 
+## Restricting the Generic Button
+The file `generic.js` injects a floating button on any page that the extension
+is loaded on. To limit this behaviour to specific sites, edit the
+`allowedDomains` array at the top of `generic.js` and include the host names you
+want to support. If the current page's hostname does not match any value in
+`allowedDomains`, no button is shown.
+
 The script also checks for fields with full name attributes like
 `form.passengers.ADT-0.name` and fills them directly, dispatching a `change`
 event after setting the value.
