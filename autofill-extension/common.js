@@ -126,13 +126,28 @@
   }
 
   function createButton(onClick) {
-    const btn = document.createElement('button');
-    btn.textContent = 'Fill Passenger Info';
-    Object.assign(btn.style, {
+    const container = document.createElement('div');
+    Object.assign(container.style, {
       position: 'fixed',
       bottom: '20px',
       right: '20px',
       zIndex: 9999,
+      display: 'flex',
+      gap: '5px'
+    });
+
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.placeholder = 'Order ID';
+    Object.assign(input.style, {
+      padding: '8px',
+      borderRadius: '4px',
+      border: '1px solid #ccc'
+    });
+
+    const btn = document.createElement('button');
+    btn.textContent = 'Fill Passenger Info';
+    Object.assign(btn.style, {
       padding: '10px 15px',
       background: '#00aaff',
       color: '#fff',
@@ -140,8 +155,30 @@
       borderRadius: '4px',
       cursor: 'pointer'
     });
-    btn.addEventListener('click', onClick);
-    document.body.appendChild(btn);
+
+    btn.addEventListener('click', async () => {
+      let data = null;
+      const bookingId = input.value.trim();
+      if (bookingId) {
+        try {
+          const res = await fetch(
+            `http://dshb.gth.com.ua/plugin/getdata?id=${encodeURIComponent(bookingId)}`
+          );
+          if (res.ok) {
+            data = await res.json();
+          } else {
+            console.error('Failed to fetch booking data');
+          }
+        } catch (err) {
+          console.error('Failed to fetch booking data', err);
+        }
+      }
+      onClick(data);
+    });
+
+    container.appendChild(input);
+    container.appendChild(btn);
+    document.body.appendChild(container);
   }
 
   window.autofillCommon = {

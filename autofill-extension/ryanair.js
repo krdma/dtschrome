@@ -20,7 +20,7 @@
       .forEach(sel => setGender(sel));
   }
 
-  function fillRyanair() {
+  function fillRyanair(data) {
     setRyanairTitles('MR');
     setRyanairGender();
     const firstInputs = document.querySelectorAll(

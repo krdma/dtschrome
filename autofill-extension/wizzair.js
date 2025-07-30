@@ -1,7 +1,7 @@
 (() => {
   const { passengers, mainPassenger, setValue, setDropdown, setGender, createButton } = window.autofillCommon;
 
-  function fillWizzAir() {
+  function fillWizzAir(data) {
     setDropdown(
       document.querySelector("select[name*='title'], select[id*='title']"),
       'MR'

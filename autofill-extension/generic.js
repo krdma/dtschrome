@@ -7,7 +7,7 @@
 
   const { passengers, mainPassenger, setValue, setValueByName, setDropdown, setGender, createButton } = window.autofillCommon;
 
-  function fillGeneric() {
+  function fillGeneric(data) {
     passengers.forEach((p, idx) => {
       setValueByName(`form.passengers.ADT-${idx}.name`, p.firstName);
       setValueByName(`form.passengers.ADT-${idx}.surname`, p.lastName);

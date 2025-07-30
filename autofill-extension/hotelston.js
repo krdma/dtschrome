@@ -1,7 +1,7 @@
 (() => {
   const { passengers, setValue, createButton } = window.autofillCommon;
 
-  function fillHotelston() {
+  function fillHotelston(data) {
     const firstInputs = document.querySelectorAll("input[name='firstname']");
     firstInputs.forEach((el, idx) =>
       setValue(el, passengers[idx] ? passengers[idx].firstName : passengers[0].firstName)
