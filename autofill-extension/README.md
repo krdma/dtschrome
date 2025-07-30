@@ -26,3 +26,14 @@ want to support. If the current page's hostname does not match any value in
 The script also checks for fields with full name attributes like
 `form.passengers.ADT-0.name` and fills them directly, dispatching a `change`
 event after setting the value.
+
+## Publishing to the Chrome Web Store
+
+To publish the extension:
+
+1. Ensure the `icons` folder contains 16, 32, 48 and 128 pixel PNG files.
+2. Bump the `version` field in `manifest.json` as needed.
+3. Create a ZIP archive of the entire `autofill-extension` directory.
+4. Visit the [Chrome Developer Dashboard](https://chrome.google.com/webstore/developer/dashboard). 
+5. Upload the ZIP file and provide screenshots, a description and other required details.
+6. Submit the extension for review.
