@@ -1,4 +1,10 @@
 (() => {
+  // Domains that should display the autofill button. Update this list as needed.
+  const allowedDomains = ['example.com'];
+  if (!allowedDomains.some(domain => location.hostname.includes(domain))) {
+    return;
+  }
+
   const { passengers, mainPassenger, setValue, setValueByName, setDropdown, setGender, createButton } = window.autofillCommon;
 
   function fillGeneric() {
