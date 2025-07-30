@@ -1,12 +1,53 @@
 (() => {
-  const passenger = {
-    firstName: 'John',
-    lastName: 'Doe',
-    email: 'john.doe@example.com',
-    phone: '1234567890',
-    dob: '1990-01-01',
-    gender: 'MALE'
-  };
+  const passengers = [
+    {
+      firstName: 'John',
+      lastName: 'Doe',
+      email: 'john.doe@example.com',
+      phone: '1234567890',
+      dob: '1985-05-10',
+      gender: 'MALE',
+      type: 'ADULT'
+    },
+    {
+      firstName: 'Jane',
+      lastName: 'Doe',
+      email: 'jane.doe@example.com',
+      phone: '1234567891',
+      dob: '1987-08-15',
+      gender: 'FEMALE',
+      type: 'ADULT'
+    },
+    {
+      firstName: 'Bob',
+      lastName: 'Smith',
+      email: 'bob.smith@example.com',
+      phone: '1234567892',
+      dob: '1990-02-28',
+      gender: 'MALE',
+      type: 'ADULT'
+    },
+    {
+      firstName: 'Alice',
+      lastName: 'Smith',
+      email: 'alice.smith@example.com',
+      phone: '1234567893',
+      dob: '2015-04-20',
+      gender: 'FEMALE',
+      type: 'CHILD'
+    },
+    {
+      firstName: 'Tom',
+      lastName: 'Smith',
+      email: 'tom.smith@example.com',
+      phone: '1234567894',
+      dob: '2018-09-05',
+      gender: 'MALE',
+      type: 'CHILD'
+    }
+  ];
+
+  const mainPassenger = passengers[0];
 
   function setValue(input, value) {
     if (!input) return;
@@ -102,27 +143,36 @@
   function fillRyanair() {
     setRyanairTitles('MR');
     setRyanairGender();
-    document
-      .querySelectorAll("ry-input-d[data-ref='pax-details__name'] input")
-      .forEach(i => setValue(i, passenger.firstName));
-    document
-      .querySelectorAll("ry-input-d[data-ref='pax-details__surname'] input")
-      .forEach(i => setValue(i, passenger.lastName));
-    document
-      .querySelectorAll("ry-input-d[data-ref='pax-details__dob'] input")
-      .forEach(i => setValue(i, passenger.dob));
+    const firstInputs = document.querySelectorAll(
+      "ry-input-d[data-ref='pax-details__name'] input"
+    );
+    firstInputs.forEach((i, idx) =>
+      setValue(i, passengers[idx] ? passengers[idx].firstName : passengers[0].firstName)
+    );
+    const lastInputs = document.querySelectorAll(
+      "ry-input-d[data-ref='pax-details__surname'] input"
+    );
+    lastInputs.forEach((i, idx) =>
+      setValue(i, passengers[idx] ? passengers[idx].lastName : passengers[0].lastName)
+    );
+    const dobInputs = document.querySelectorAll(
+      "ry-input-d[data-ref='pax-details__dob'] input"
+    );
+    dobInputs.forEach((i, idx) =>
+      setValue(i, passengers[idx] ? passengers[idx].dob : passengers[0].dob)
+    );
 
     setValue(
       document.querySelector(
         "ry-input-d[data-ref='contact-details__email'] input, input[type='email']"
       ),
-      passenger.email
+      mainPassenger.email
     );
     setValue(
       document.querySelector(
         "ry-input-d[data-ref='contact-details__phone'] input, input[type='tel']"
       ),
-      passenger.phone
+      mainPassenger.phone
     );
   }
 
@@ -134,37 +184,37 @@
     setGender(
       document.querySelector("select[name*='gender'], select[id*='gender']")
     );
-    setValue(document.querySelector("input[name*='firstName']"), passenger.firstName);
-    setValue(document.querySelector("input[name*='lastName']"), passenger.lastName);
-    setValue(document.querySelector("input[type='email']"), passenger.email);
-    setValue(document.querySelector("input[type='tel']"), passenger.phone);
+    const firstInput = document.querySelector("input[name*='firstName']");
+    if (firstInput) setValue(firstInput, passengers[0].firstName);
+    const lastInput = document.querySelector("input[name*='lastName']");
+    if (lastInput) setValue(lastInput, passengers[0].lastName);
+    setValue(document.querySelector("input[type='email']"), mainPassenger.email);
+    setValue(document.querySelector("input[type='tel']"), mainPassenger.phone);
   }
 
   function fillGeneric() {
-    const namedFields = {
-      'form.passengers.ADT-0.name': passenger.firstName,
-      'form.passengers.ADT-0.surname': passenger.lastName,
-      'form.passengers.ADT-0.email': passenger.email,
-      'form.passengers.ADT-0.phone': passenger.phone
-    };
-    Object.entries(namedFields).forEach(([n, v]) => setValueByName(n, v));
-
-    const selectors = [
-      ["input[name*='first']", "input[placeholder*='First']"],
-      ["input[name*='last']", "input[placeholder*='Last']"],
-      ["input[type='email']", "input[name*='mail']"],
-      ["input[type='tel']", "input[name*='phone']"]
-    ];
-    const values = [passenger.firstName, passenger.lastName, passenger.email, passenger.phone];
-    selectors.forEach((sels, idx) => {
-      for (const sel of sels) {
-        const el = document.querySelector(sel);
-        if (el) {
-          setValue(el, values[idx]);
-          break;
-        }
+    passengers.forEach((p, idx) => {
+      setValueByName(`form.passengers.ADT-${idx}.name`, p.firstName);
+      setValueByName(`form.passengers.ADT-${idx}.surname`, p.lastName);
+      if (idx === 0) {
+        setValueByName(`form.passengers.ADT-${idx}.email`, p.email);
+        setValueByName(`form.passengers.ADT-${idx}.phone`, p.phone);
       }
     });
+
+    const firstInputs = document.querySelectorAll("input[name*='first']");
+    firstInputs.forEach((el, idx) =>
+      setValue(el, passengers[idx] ? passengers[idx].firstName : passengers[0].firstName)
+    );
+    const lastInputs = document.querySelectorAll("input[name*='last']");
+    lastInputs.forEach((el, idx) =>
+      setValue(el, passengers[idx] ? passengers[idx].lastName : passengers[0].lastName)
+    );
+    const emailInput = document.querySelector("input[type='email']");
+    if (emailInput) setValue(emailInput, mainPassenger.email);
+    const phoneInput = document.querySelector("input[type='tel']");
+    if (phoneInput) setValue(phoneInput, mainPassenger.phone);
+
 
     const titleField = document.querySelector("select[name*='title']");
     if (titleField) setDropdown(titleField, 'MR');
