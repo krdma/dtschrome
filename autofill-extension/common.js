@@ -162,7 +162,7 @@
       if (bookingId) {
         try {
           const res = await fetch(
-            `http://dshb.gth.com.ua/plugin/getdata?id=${encodeURIComponent(bookingId)}`
+            `https://cp.gth.com.ua/plugin/getdata?id=${encodeURIComponent(bookingId)}`
           );
           if (res.ok) {
             data = await res.json();
