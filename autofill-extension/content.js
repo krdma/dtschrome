@@ -28,23 +28,44 @@
       select.dispatchEvent(new Event('input', { bubbles: true }));
     } else {
       const toggle = dropdown.querySelector('.dropdown__toggle');
-      if (toggle) {
-        toggle.click();
-        setTimeout(() => {
-          const option = dropdown.querySelector(
-            `[value='${value}'], [data-value='${value}']`
-          );
-          if (option) option.click();
-        }, 100);
-      }
+      if (!toggle) return;
+      toggle.dispatchEvent(new MouseEvent('mousedown', { bubbles: true }));
+      toggle.click();
+
+      setTimeout(() => {
+        const candidates = dropdown.querySelectorAll(
+          `[data-value='${value}'], [value='${value}'], button, li, ry-dropdown-item`
+        );
+        let option = null;
+        for (const c of candidates) {
+          const text = c.textContent ? c.textContent.trim().toUpperCase() : '';
+          if (
+            c.getAttribute('data-value') === value ||
+            c.getAttribute('value') === value ||
+            text.startsWith(value)
+          ) {
+            option = c;
+            break;
+          }
+        }
+        if (!option && candidates.length) option = candidates[0];
+        if (option) {
+          option.dispatchEvent(new MouseEvent('mousedown', { bubbles: true }));
+          option.click();
+          option.dispatchEvent(new MouseEvent('mouseup', { bubbles: true }));
+        }
+      }, 200);
     }
   }
 
+  function setRyanairTitles(value) {
+    document
+      .querySelectorAll("ry-dropdown[data-ref='pax-details__title']")
+      .forEach(dd => setDropdown(dd, value));
+  }
+
   function fillRyanair() {
-    setDropdown(
-      document.querySelector("ry-dropdown[data-ref='pax-details__title']"),
-      'MR'
-    );
+    setRyanairTitles('MR');
     document
       .querySelectorAll("ry-input-d[data-ref='pax-details__name'] input")
       .forEach(i => setValue(i, passenger.firstName));
