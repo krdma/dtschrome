@@ -1,0 +1,14 @@
+{
+  "manifest_version": 3,
+  "name": "Flight Booker Autofill",
+  "description": "Autofills passenger and contact info on Ryanair and WizzAir booking pages.",
+  "version": "1.0",
+  "permissions": ["activeTab", "scripting"],
+  "content_scripts": [
+    {
+      "matches": ["*://*.ryanair.com/*", "*://*.wizzair.com/*"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ]
+}
