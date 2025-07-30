@@ -4,7 +4,8 @@
     lastName: 'Doe',
     email: 'john.doe@example.com',
     phone: '1234567890',
-    dob: '1990-01-01'
+    dob: '1990-01-01',
+    gender: 'MALE'
   };
 
   function setValue(input, value) {
@@ -12,6 +13,8 @@
     input.focus();
     input.value = value;
     input.dispatchEvent(new Event('input', { bubbles: true }));
+    input.dispatchEvent(new Event('change', { bubbles: true }));
+    input.dispatchEvent(new Event('blur', { bubbles: true }));
   }
 
   function setDropdown(dropdown, value) {
@@ -58,14 +61,39 @@
     }
   }
 
+  function getMaleValue(select) {
+    const options = Array.from(select.querySelectorAll('option'));
+    if (!options.length) return null;
+    for (const opt of options) {
+      const text = (opt.textContent || '').trim().toUpperCase();
+      const val = (opt.value || '').toUpperCase();
+      if (/^(MALE|M(?!S)|MR|MAN)/.test(text) || /^(MALE|M(?!S)|MR|MAN)/.test(val)) {
+        return opt.value;
+      }
+    }
+    return options[0].value;
+  }
+
+  function setGender(select) {
+    const value = getMaleValue(select);
+    if (value != null) setDropdown(select, value);
+  }
+
   function setRyanairTitles(value) {
     document
       .querySelectorAll("ry-dropdown[data-ref='pax-details__title']")
       .forEach(dd => setDropdown(dd, value));
   }
 
+  function setRyanairGender() {
+    document
+      .querySelectorAll("select[data-ref*='gender'], select[name*='gender']")
+      .forEach(sel => setGender(sel));
+  }
+
   function fillRyanair() {
     setRyanairTitles('MR');
+    setRyanairGender();
     document
       .querySelectorAll("ry-input-d[data-ref='pax-details__name'] input")
       .forEach(i => setValue(i, passenger.firstName));
@@ -95,6 +123,9 @@
       document.querySelector("select[name*='title'], select[id*='title']"),
       'MR'
     );
+    setGender(
+      document.querySelector("select[name*='gender'], select[id*='gender']")
+    );
     setValue(document.querySelector("input[name*='firstName']"), passenger.firstName);
     setValue(document.querySelector("input[name*='lastName']"), passenger.lastName);
     setValue(document.querySelector("input[type='email']"), passenger.email);
@@ -118,6 +149,11 @@
         }
       }
     });
+
+    const titleField = document.querySelector("select[name*='title']");
+    if (titleField) setDropdown(titleField, 'MR');
+    const genderField = document.querySelector("select[name*='gender']");
+    if (genderField) setGender(genderField);
   }
 
   function fillFields() {
