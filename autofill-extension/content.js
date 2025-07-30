@@ -14,7 +14,37 @@
     input.dispatchEvent(new Event('input', { bubbles: true }));
   }
 
+  function setDropdown(dropdown, value) {
+    if (!dropdown) return;
+    let select = null;
+    if (dropdown.tagName === 'SELECT') {
+      select = dropdown;
+    } else {
+      select = dropdown.querySelector('select');
+    }
+    if (select) {
+      select.value = value;
+      select.dispatchEvent(new Event('change', { bubbles: true }));
+      select.dispatchEvent(new Event('input', { bubbles: true }));
+    } else {
+      const toggle = dropdown.querySelector('.dropdown__toggle');
+      if (toggle) {
+        toggle.click();
+        setTimeout(() => {
+          const option = dropdown.querySelector(
+            `[value='${value}'], [data-value='${value}']`
+          );
+          if (option) option.click();
+        }, 100);
+      }
+    }
+  }
+
   function fillRyanair() {
+    setDropdown(
+      document.querySelector("ry-dropdown[data-ref='pax-details__title']"),
+      'MR'
+    );
     document
       .querySelectorAll("ry-input-d[data-ref='pax-details__name'] input")
       .forEach(i => setValue(i, passenger.firstName));
@@ -40,6 +70,10 @@
   }
 
   function fillWizzAir() {
+    setDropdown(
+      document.querySelector("select[name*='title'], select[id*='title']"),
+      'MR'
+    );
     setValue(document.querySelector("input[name*='firstName']"), passenger.firstName);
     setValue(document.querySelector("input[name*='lastName']"), passenger.lastName);
     setValue(document.querySelector("input[type='email']"), passenger.email);
