@@ -1,13 +1,29 @@
 {
   "manifest_version": 3,
   "name": "Flight Booker Autofill",
-  "description": "Autofills passenger and contact info on Ryanair and WizzAir booking pages.",
+  "description": "Autofills passenger and contact info on booking pages.",
   "version": "1.0",
   "permissions": ["activeTab", "scripting"],
   "content_scripts": [
     {
-      "matches": ["*://*.ryanair.com/*", "*://*.wizzair.com/*"],
-      "js": ["content.js"],
+      "matches": ["*://*.ryanair.com/*"],
+      "js": ["common.js", "ryanair.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["*://*.wizzair.com/*"],
+      "js": ["common.js", "wizzair.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["*://*.hotelston.com/*"],
+      "js": ["common.js", "hotelston.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["<all_urls>"],
+      "exclude_matches": ["*://*.ryanair.com/*", "*://*.wizzair.com/*", "*://*.hotelston.com/*"],
+      "js": ["common.js", "generic.js"],
       "run_at": "document_idle"
     }
   ]
