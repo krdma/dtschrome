@@ -30,6 +30,11 @@
       "run_at": "document_idle"
     },
     {
+      "matches": ["*://b2bdirect.itravex.es/*"],
+      "js": ["common.js", "itravex.js"],
+      "run_at": "document_idle"
+    },
+    {
       "matches": ["<all_urls>"],
       "exclude_matches": ["*://*.ryanair.com/*", "*://*.wizzair.com/*", "*://*.hotelston.com/*"],
       "js": ["common.js", "generic.js"],
