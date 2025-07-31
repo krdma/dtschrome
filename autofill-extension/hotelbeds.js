@@ -7,17 +7,17 @@
     createButton
   } = window.autofillCommon;
 
-  const skipContainerSelector = '.hotel__body__customers__items';
+  const $ = window.afJQuery;
+  const skipContainerSelector = '.hotel__body__customers';
 
   function selectOutside(selector) {
-    const skipContainer = document.querySelector(skipContainerSelector);
-    const elements = document.querySelectorAll(selector);
-    for (const el of elements) {
-      if (!skipContainer || !skipContainer.contains(el)) {
-        return el;
-      }
-    }
-    return null;
+    return (
+      $(selector)
+        .filter(function () {
+          return !$(this).closest(skipContainerSelector).length;
+        })
+        .get(0) || null
+    );
   }
 
   function splitPhone(phone) {
@@ -67,7 +67,7 @@
   }
 
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => createButton(fillHotelbeds));
+    $(document).ready(() => createButton(fillHotelbeds));
   } else {
     createButton(fillHotelbeds);
   }
