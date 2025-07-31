@@ -25,14 +25,8 @@
     const lastInput = document.querySelector("input[name*='lastName']");
     if (lastInput)
       setValue(lastInput, pax[0] ? (pax[0].last_name || pax[0].lastName) : passengers[0].lastName);
-    setValue(
-      document.querySelector("input[type='email']"),
-      contact.email || mainPassenger.email
-    );
-    setValue(
-      document.querySelector("input[type='tel']"),
-      contact.phone || mainPassenger.phone
-    );
+    setValue(document.querySelector("input[type='email']"), contact.email);
+    setValue(document.querySelector("input[type='tel']"), contact.phone);
   }
 
   if (document.readyState === 'loading') {
