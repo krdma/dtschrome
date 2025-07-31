@@ -7,6 +7,18 @@
     createButton
   } = window.autofillCommon;
 
+  const skipContainer = '.hotel__body__customers__items';
+
+  function selectOutside(selector) {
+    const elements = document.querySelectorAll(selector);
+    for (const el of elements) {
+      if (!el.closest(skipContainer)) {
+        return el;
+      }
+    }
+    return null;
+  }
+
   function splitPhone(phone) {
     const digits = String(phone || '').replace(/\D+/g, '');
     const code = digits.slice(0, 3);
@@ -20,35 +32,35 @@
     const first = pax[0] || passengers[0];
 
     setValue(
-      document.querySelector("input[formcontrolname='name']"),
+      selectOutside("input[formcontrolname='name']"),
       first.first_name || first.firstName
     );
     setValue(
-      document.querySelector("input[formcontrolname='surname']"),
+      selectOutside("input[formcontrolname='surname']"),
       first.last_name || first.lastName
     );
 
     const { code, number } = splitPhone(contact.phone);
     setDropdown(
-      document.querySelector("[formcontrolname='countryCode']"),
+      selectOutside("[formcontrolname='countryCode']"),
       code
     );
     setValue(
-      document.querySelector("input[formcontrolname='phoneNumber']"),
+      selectOutside("input[formcontrolname='phoneNumber']"),
       number
     );
-    const phoneInput = document.querySelector("input[formcontrolname='phone']");
+    const phoneInput = selectOutside("input[formcontrolname='phone']");
     if (phoneInput) setValue(phoneInput, code + number);
 
     setValue(
-      document.querySelector("input[formcontrolname='email']"),
+      selectOutside("input[formcontrolname='email']"),
       contact.email
     );
 
     const orderId =
       data?.order_id || data?.orderId || data?.id || data?.booking_id || '';
     setValue(
-      document.querySelector("input[formcontrolname='clientReference']"),
+      selectOutside("input[formcontrolname='clientReference']"),
       orderId
     );
   }
