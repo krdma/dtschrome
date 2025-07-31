@@ -9,6 +9,9 @@
   function fillItravex(data) {
     const pax = data && data.passports ? data.passports : passengers;
     const contact = getContactInfo(data || {});
+    const orderId =
+      data?.order_id || data?.orderId || data?.id || data?.booking_id || '';
+    setValue(document.getElementById('reference'), orderId);
 
     pax.forEach((p, idx) => {
       const first = p.first_name || p.firstName;
