@@ -39,7 +39,9 @@
     const contactSection = findContactSection();
 
     const firstInputs = Array.from(
-      document.querySelectorAll("input[name='firstname']")
+      document.querySelectorAll(
+        "input[name='firstname'], input[name*='first']"
+      )
     ).filter(el => !contactSection || !contactSection.contains(el));
     firstInputs.slice(0, pax.length).forEach((el, idx) => {
       const first = pax[idx]
@@ -49,7 +51,9 @@
     });
 
     const lastInputs = Array.from(
-      document.querySelectorAll("input[name='lastname']")
+      document.querySelectorAll(
+        "input[name='lastname'], input[name*='last']"
+      )
     ).filter(el => !contactSection || !contactSection.contains(el));
     lastInputs.slice(0, pax.length).forEach((el, idx) => {
       const last = pax[idx]
