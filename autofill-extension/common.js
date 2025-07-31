@@ -133,8 +133,44 @@
       right: '20px',
       zIndex: 9999,
       display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'flex-end',
       gap: '5px'
     });
+
+    const infoBox = document.createElement('div');
+    Object.assign(infoBox.style, {
+      background: '#fff',
+      border: '1px solid #ccc',
+      padding: '10px',
+      borderRadius: '4px',
+      maxWidth: '300px',
+      maxHeight: '200px',
+      overflow: 'auto',
+      display: 'none'
+    });
+
+    const toggleInfo = document.createElement('button');
+    toggleInfo.textContent = '\u25BC';
+    Object.assign(toggleInfo.style, {
+      padding: '2px 6px',
+      border: '1px solid #ccc',
+      borderRadius: '4px',
+      background: '#f0f0f0',
+      cursor: 'pointer'
+    });
+    toggleInfo.addEventListener('click', () => {
+      if (infoBox.style.display === 'none') {
+        infoBox.style.display = 'block';
+        toggleInfo.textContent = '\u25B2';
+      } else {
+        infoBox.style.display = 'none';
+        toggleInfo.textContent = '\u25BC';
+      }
+    });
+
+    const controls = document.createElement('div');
+    Object.assign(controls.style, { display: 'flex', gap: '5px' });
 
     const input = document.createElement('input');
     input.type = 'text';
@@ -172,11 +208,22 @@
           console.error('Failed to fetch booking data', err);
         }
       }
+      if (data) {
+        infoBox.textContent = JSON.stringify(data, null, 2);
+      } else {
+        infoBox.textContent = 'No data';
+      }
+      infoBox.style.display = 'block';
+      toggleInfo.textContent = '\u25B2';
       onClick(data);
     });
 
-    container.appendChild(input);
-    container.appendChild(btn);
+    controls.appendChild(input);
+    controls.appendChild(btn);
+    controls.appendChild(toggleInfo);
+
+    container.appendChild(infoBox);
+    container.appendChild(controls);
     document.body.appendChild(container);
   }
 
