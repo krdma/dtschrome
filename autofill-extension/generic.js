@@ -5,10 +5,20 @@
     return;
   }
 
-  const { passengers, mainPassenger, setValue, setValueByName, setDropdown, setGender, createButton } = window.autofillCommon;
+  const {
+    passengers,
+    mainPassenger,
+    setValue,
+    setValueByName,
+    setDropdown,
+    setGender,
+    getContactInfo,
+    createButton
+  } = window.autofillCommon;
 
   function fillGeneric(data) {
     const pax = data && data.passports ? data.passports : passengers;
+    const contact = getContactInfo(data || {});
 
     pax.forEach((p, idx) => {
       const first = p.first_name || p.firstName;
@@ -16,8 +26,8 @@
       setValueByName(`form.passengers.ADT-${idx}.name`, first);
       setValueByName(`form.passengers.ADT-${idx}.surname`, last);
       if (idx === 0) {
-        const email = data?.email || p.email || mainPassenger.email;
-        const phone = data?.phone || p.phone || mainPassenger.phone;
+        const email = contact.email || p.email || mainPassenger.email;
+        const phone = contact.phone || p.phone || mainPassenger.phone;
         setValueByName(`form.passengers.ADT-${idx}.email`, email);
         setValueByName(`form.passengers.ADT-${idx}.phone`, phone);
       }
@@ -34,9 +44,9 @@
       setValue(el, last);
     });
     const emailInput = document.querySelector("input[type='email']");
-    if (emailInput) setValue(emailInput, data?.email || mainPassenger.email);
+    if (emailInput) setValue(emailInput, contact.email || mainPassenger.email);
     const phoneInput = document.querySelector("input[type='tel']");
-    if (phoneInput) setValue(phoneInput, data?.phone || mainPassenger.phone);
+    if (phoneInput) setValue(phoneInput, contact.phone || mainPassenger.phone);
 
     const titleField = document.querySelector("select[name*='title']");
     if (titleField) setDropdown(titleField, 'MR');
