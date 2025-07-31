@@ -144,6 +144,8 @@
       ? data.contact
       : Array.isArray(data?.contacts)
       ? data.contacts
+      : data?.contact && typeof data.contact === 'object'
+      ? [data.contact]
       : null;
     if (contacts) {
       for (const c of contacts) {
