@@ -52,13 +52,13 @@
       document.querySelector(
         "ry-input-d[data-ref='contact-details__email'] input, input[type='email']"
       ),
-      contact.email || mainPassenger.email
+      contact.email
     );
     setValue(
       document.querySelector(
         "ry-input-d[data-ref='contact-details__phone'] input, input[type='tel']"
       ),
-      contact.phone || mainPassenger.phone
+      contact.phone
     );
   }
 
