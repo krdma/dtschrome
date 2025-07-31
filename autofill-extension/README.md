@@ -1,6 +1,6 @@
 # Flight Booker Autofill Chrome Extension
 
-This extension adds a floating button to booking pages on **Ryanair**, **WizzAir** and **Hotelston**. Clicking the button fills passenger data with test information. On Ryanair and WizzAir the contact fields are also completed, while on Hotelston only passenger names are filled.
+This extension adds a floating button to booking pages on **Ryanair**, **WizzAir** and **Hotelston**. Clicking the button fills passenger data with test information. Contact details are automatically populated on all three sites when a section titled *Контактное лицо* or similar is found.
 
 ## Installation
 1. Open Chrome and navigate to `chrome://extensions`.
@@ -8,7 +8,7 @@ This extension adds a floating button to booking pages on **Ryanair**, **WizzAir
 3. Click **Load unpacked** and select this `autofill-extension` folder.
 
 ## Usage
-Visit a booking page on `ryanair.com`, `wizzair.com` or `hotelston.com`. A small panel with an **Order ID** field and a **Fill Passenger Info** button will appear in the bottom-right corner of the page. Enter an order number if you have one and press the button. The extension will fetch booking data from `https://cp.gth.com.ua/plugin/getdata?id=<ORDER_ID>` before filling the forms. If no order ID is provided the placeholder test data is used. On Ryanair, the script selects title and gender dropdowns as if a user interacted with them. The script targets the `data-ref` fields for passenger details. Contact sections identified by headings like *Контактное лицо* are filled only with contact information from the booking data. On WizzAir and Hotelston the script falls back to common field names. The Hotelston script intentionally leaves the contact fields blank.
+Visit a booking page on `ryanair.com`, `wizzair.com` or `hotelston.com`. A small panel with an **Order ID** field and a **Fill Passenger Info** button will appear in the bottom-right corner of the page. Enter an order number if you have one and press the button. The extension will fetch booking data from `https://cp.gth.com.ua/plugin/getdata?id=<ORDER_ID>` before filling the forms. If no order ID is provided the placeholder test data is used. On Ryanair, the script selects title and gender dropdowns as if a user interacted with them. The script targets the `data-ref` fields for passenger details. Contact sections identified by headings like *Контактное лицо* are filled only with contact information from the booking data. On WizzAir and Hotelston the script falls back to common field names and now also completes the contact form when detected.
 
 The extension uses placeholder test data that can be modified in `common.js`.
 Five sample passengers are defined (three adults and two children). When the
