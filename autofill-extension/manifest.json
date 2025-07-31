@@ -40,6 +40,11 @@
       "run_at": "document_idle"
     },
     {
+      "matches": ["*://bedbank.viajesolympia.com/*"],
+      "js": ["common.js", "viajesolympia.js"],
+      "run_at": "document_idle"
+    },
+    {
       "matches": ["<all_urls>"],
       "exclude_matches": [
         "*://*.ryanair.com/*",
