@@ -178,6 +178,16 @@
     return result;
   }
 
+  function formatDate(value) {
+    if (!value) return '';
+    const datePart = value.split('T')[0].split(' ')[0];
+    let m = datePart.match(/^(\d{4})[-/](\d{2})[-/](\d{2})$/);
+    if (m) return `${m[3]}.${m[2]}.${m[1]}`;
+    m = datePart.match(/^(\d{2})[./-](\d{2})[./-](\d{4})$/);
+    if (m) return `${m[1]}.${m[2]}.${m[3]}`;
+    return datePart;
+  }
+
   function createButton(onClick) {
     const container = document.createElement('div');
     Object.assign(container.style, {
@@ -197,8 +207,7 @@
       border: '1px solid #ccc',
       padding: '10px',
       borderRadius: '4px',
-      maxWidth: '300px',
-      maxHeight: '200px',
+      maxWidth: '400px',
       overflow: 'auto',
       display: 'none'
     });
@@ -264,7 +273,7 @@
         table.style.borderCollapse = 'collapse';
         table.style.width = '100%';
         const thead = document.createElement('thead');
-        thead.innerHTML = '<tr><th>Имя</th><th>Фамилия</th><th>Паспорт</th><th>ДР</th></tr>';
+        thead.innerHTML = '<tr><th>Пол</th><th>Имя</th><th>Фамилия</th><th>Паспорт</th><th>ДР</th></tr>';
         Array.from(thead.querySelectorAll('th')).forEach(th => {
           th.style.border = '1px solid #ccc';
           th.style.padding = '2px 4px';
@@ -273,10 +282,12 @@
         const tbody = document.createElement('tbody');
         data.passports.forEach(p => {
           const row = document.createElement('tr');
-          row.innerHTML = `<td>${p.first_name || p.firstName || ''}</td>` +
+          const dob = formatDate(p.birthday || p.dob || '');
+          row.innerHTML = `<td>${p.gender || p.sex || ''}</td>` +
+            `<td>${p.first_name || p.firstName || ''}</td>` +
             `<td>${p.last_name || p.lastName || ''}</td>` +
             `<td>${p.passport_number || p.passportNumber || ''}</td>` +
-            `<td>${(p.birthday || p.dob || '').split(' ')[0]}</td>`;
+            `<td>${dob}</td>`;
           Array.from(row.children).forEach(td => {
             td.style.border = '1px solid #ccc';
             td.style.padding = '2px 4px';
