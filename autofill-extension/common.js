@@ -161,11 +161,10 @@
       const bookingId = input.value.trim();
       if (bookingId) {
         try {
-          const res = await fetch(
-            `https://cp.gth.com.ua/plugin/getdata?id=${encodeURIComponent(bookingId)}`
-          );
-          if (res.ok) {
-            data = await res.json();
+          const url = `https://cp.gth.com.ua/plugin/getdata?id=${encodeURIComponent(bookingId)}`;
+          const res = await chrome.runtime.sendMessage({ action: 'fetch', url });
+          if (res && res.ok) {
+            data = res.data;
           } else {
             console.error('Failed to fetch booking data');
           }
