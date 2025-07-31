@@ -31,19 +31,34 @@
     return null;
   }
 
-  function fillContactSection(contact, section) {
+  function fillContactSection(contact, section, after) {
     if (!section) return;
-    setDropdown(section.querySelector('select'), contact.title || 'MR');
-    setValue(
-      section.querySelector("input[name='firstname'], input[name*='first']"),
-      contact.firstName
+
+    const isAfter = el =>
+      !after || (after.compareDocumentPosition(el) & Node.DOCUMENT_POSITION_FOLLOWING);
+
+    const dropdown = Array.from(section.querySelectorAll('select')).find(isAfter);
+    setDropdown(dropdown, contact.title || 'MR');
+
+    const firstInput = Array.from(
+      section.querySelectorAll("input[name='firstname'], input[name*='first']")
+    ).find(isAfter);
+    setValue(firstInput, contact.firstName);
+
+    const lastInput = Array.from(
+      section.querySelectorAll("input[name='lastname'], input[name*='last']")
+    ).find(isAfter);
+    setValue(lastInput, contact.lastName);
+
+    const emailInput = Array.from(section.querySelectorAll("input[type='email']")).find(
+      isAfter
     );
-    setValue(
-      section.querySelector("input[name='lastname'], input[name*='last']"),
-      contact.lastName
+    setValue(emailInput, contact.email);
+
+    const phoneInput = Array.from(section.querySelectorAll("input[type='tel']")).find(
+      isAfter
     );
-    setValue(section.querySelector("input[type='email']"), contact.email);
-    setValue(section.querySelector("input[type='tel']"), contact.phone);
+    setValue(phoneInput, contact.phone);
   }
 
   function fillBookingInfoForm(data) {
@@ -57,11 +72,14 @@
       .find(h => /контакт/i.test(h.textContent || ''));
     const contactSection = contactHeader ? contactHeader.parentElement : null;
 
+    const isBefore = el =>
+      contactHeader && (el.compareDocumentPosition(contactHeader) & Node.DOCUMENT_POSITION_FOLLOWING);
+
     const firstInputs = Array.from(form.querySelectorAll("input[name='firstname']"));
     const lastInputs = Array.from(form.querySelectorAll("input[name='lastname']"));
 
     firstInputs.forEach((input, idx) => {
-      if (contactSection && contactSection.contains(input)) return;
+      if (contactSection && !isBefore(input)) return;
       const p = pax[idx] || pax[0];
       setValue(input, p.first_name || p.firstName);
       const block = input.closest('div');
@@ -70,21 +88,13 @@
     });
 
     lastInputs.forEach((input, idx) => {
-      if (contactSection && contactSection.contains(input)) return;
+      if (contactSection && !isBefore(input)) return;
       const p = pax[idx] || pax[0];
       setValue(input, p.last_name || p.lastName);
     });
 
     if (contactSection) {
-      setBasicDropdown(
-        contactSection.querySelector("[data-testid='basicDropdown']"),
-        contact.title === 'MS' || contact.title === 'MRS' ? 'Г-жа' : 'Г-н'
-      );
-      setValue(contactSection.querySelector("input[name='firstname']"), contact.firstName);
-      setValue(contactSection.querySelector("input[name='lastname']"), contact.lastName);
-      setValue(contactSection.querySelector("input[type='email']"), contact.email);
-      const phoneInput = contactSection.querySelector("input[type='tel']");
-      if (phoneInput) setValue(phoneInput, contact.phone);
+      fillContactSection(contact, contactSection, contactHeader);
     }
 
     return true;
@@ -95,13 +105,22 @@
 
     const pax = data && data.passports ? data.passports : passengers;
     const contact = getContactInfo(data || {});
-    const contactSection = findContactSection();
+
+    const contactHeader =
+      document.querySelector('h4.app48d785bd6b5800a2_SNeFvWtYAKI-') ||
+      Array.from(document.querySelectorAll('h1,h2,h3,h4,h5,h6')).find(h =>
+        /контакт/i.test(h.textContent || '')
+      );
+    const contactSection = contactHeader ? contactHeader.parentElement : findContactSection();
+
+    const isBefore = el =>
+      contactHeader && (el.compareDocumentPosition(contactHeader) & Node.DOCUMENT_POSITION_FOLLOWING);
 
     const firstInputs = Array.from(
       document.querySelectorAll(
         "input[name='firstname'], input[name*='first']"
       )
-    ).filter(el => !contactSection || !contactSection.contains(el));
+    ).filter(el => (!contactSection || !contactSection.contains(el)) && (!contactHeader || isBefore(el)));
     firstInputs.slice(0, pax.length).forEach((el, idx) => {
       const first = pax[idx]
         ? pax[idx].first_name || pax[idx].firstName
@@ -113,7 +132,7 @@
       document.querySelectorAll(
         "input[name='lastname'], input[name*='last']"
       )
-    ).filter(el => !contactSection || !contactSection.contains(el));
+    ).filter(el => (!contactSection || !contactSection.contains(el)) && (!contactHeader || isBefore(el)));
     lastInputs.slice(0, pax.length).forEach((el, idx) => {
       const last = pax[idx]
         ? pax[idx].last_name || pax[idx].lastName
@@ -121,7 +140,7 @@
       setValue(el, last);
     });
 
-    fillContactSection(contact, contactSection);
+    fillContactSection(contact, contactSection, contactHeader);
   }
 
   if (document.readyState === 'loading') {
