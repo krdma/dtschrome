@@ -207,6 +207,7 @@
       border: '1px solid #ccc',
       padding: '10px',
       borderRadius: '4px',
+      fontSize: '11px',
       maxWidth: '400px',
       overflow: 'auto',
       display: 'none'
