@@ -1,4 +1,5 @@
 (() => {
+  const $ = (window.afJQuery = window.jQuery ? window.jQuery.noConflict(true) : undefined);
   const passengers = [
     {
       firstName: 'John',
@@ -189,8 +190,8 @@
   }
 
   function createButton(onClick) {
-    const container = document.createElement('div');
-    Object.assign(container.style, {
+    const $container = $('<div>');
+    $container.css({
       position: 'fixed',
       bottom: '20px',
       right: '20px',
@@ -201,8 +202,8 @@
       gap: '5px'
     });
 
-    const infoBox = document.createElement('div');
-    Object.assign(infoBox.style, {
+    const $infoBox = $('<div>');
+    $infoBox.css({
       background: '#fff',
       border: '1px solid #ccc',
       padding: '10px',
@@ -213,40 +214,36 @@
       display: 'none'
     });
 
-    const toggleInfo = document.createElement('button');
-    toggleInfo.textContent = '\u25BC';
-    Object.assign(toggleInfo.style, {
+    const $toggleInfo = $('<button>');
+    $toggleInfo.text('\u25BC');
+    $toggleInfo.css({
       padding: '2px 6px',
       border: '1px solid #ccc',
       borderRadius: '4px',
       background: '#f0f0f0',
       cursor: 'pointer'
     });
-    toggleInfo.addEventListener('click', () => {
-      if (infoBox.style.display === 'none') {
-        infoBox.style.display = 'block';
-        toggleInfo.textContent = '\u25B2';
+    $toggleInfo.on('click', () => {
+      if ($infoBox.css('display') === 'none') {
+        $infoBox.show();
+        $toggleInfo.text('\u25B2');
       } else {
-        infoBox.style.display = 'none';
-        toggleInfo.textContent = '\u25BC';
+        $infoBox.hide();
+        $toggleInfo.text('\u25BC');
       }
     });
 
-    const controls = document.createElement('div');
-    Object.assign(controls.style, { display: 'flex', gap: '5px' });
+    const $controls = $('<div>').css({ display: 'flex', gap: '5px' });
 
-    const input = document.createElement('input');
-    input.type = 'text';
-    input.placeholder = 'Order ID';
-    Object.assign(input.style, {
+    const $input = $('<input type="text" placeholder="Order ID">');
+    $input.css({
       padding: '8px',
       borderRadius: '4px',
       border: '1px solid #ccc'
     });
 
-    const btn = document.createElement('button');
-    btn.textContent = 'Fill Passenger Info';
-    Object.assign(btn.style, {
+    const $btn = $('<button>Fill Passenger Info</button>');
+    $btn.css({
       padding: '10px 15px',
       background: '#00aaff',
       color: '#fff',
@@ -256,55 +253,46 @@
     });
 
     function displayData(data) {
-      infoBox.innerHTML = '';
+      $infoBox.empty();
       if (!data) {
-        infoBox.textContent = 'No data';
+        $infoBox.text('No data');
         return;
       }
       const orderId = data.id || data.orderId || data.order_id || data.booking_id || '';
       if (orderId) {
-        const header = document.createElement('div');
-        header.textContent = `\u2116 заказа: ${orderId}`;
-        header.style.fontWeight = 'bold';
-        header.style.marginBottom = '5px';
-        infoBox.appendChild(header);
+        $('<div>')
+          .text(`\u2116 заказа: ${orderId}`)
+          .css({ fontWeight: 'bold', marginBottom: '5px' })
+          .appendTo($infoBox);
       }
       if (Array.isArray(data.passports) && data.passports.length) {
-        const table = document.createElement('table');
-        table.style.borderCollapse = 'collapse';
-        table.style.width = '100%';
-        const thead = document.createElement('thead');
-        thead.innerHTML = '<tr><th>Пол</th><th>Имя</th><th>Фамилия</th><th>Паспорт</th><th>ДР</th></tr>';
-        Array.from(thead.querySelectorAll('th')).forEach(th => {
-          th.style.border = '1px solid #ccc';
-          th.style.padding = '2px 4px';
-        });
-        table.appendChild(thead);
-        const tbody = document.createElement('tbody');
+        const $table = $('<table>').css({ borderCollapse: 'collapse', width: '100%' });
+        const $thead = $('<thead>').html('<tr><th>Пол</th><th>Имя</th><th>Фамилия</th><th>Паспорт</th><th>ДР</th></tr>');
+        $thead.find('th').css({ border: '1px solid #ccc', padding: '2px 4px' });
+        $table.append($thead);
+        const $tbody = $('<tbody>');
         data.passports.forEach(p => {
-          const row = document.createElement('tr');
           const dob = formatDate(p.birthday || p.dob || '');
-          row.innerHTML = `<td>${p.gender || p.sex || ''}</td>` +
+          const $row = $('<tr>').html(
+            `<td>${p.gender || p.sex || ''}</td>` +
             `<td>${p.first_name || p.firstName || ''}</td>` +
             `<td>${p.last_name || p.lastName || ''}</td>` +
             `<td>${p.passport_number || p.passportNumber || ''}</td>` +
-            `<td>${dob}</td>`;
-          Array.from(row.children).forEach(td => {
-            td.style.border = '1px solid #ccc';
-            td.style.padding = '2px 4px';
-          });
-          tbody.appendChild(row);
+            `<td>${dob}</td>`
+          );
+          $row.children().css({ border: '1px solid #ccc', padding: '2px 4px' });
+          $tbody.append($row);
         });
-        table.appendChild(tbody);
-        infoBox.appendChild(table);
+        $table.append($tbody);
+        $infoBox.append($table);
       } else {
-        infoBox.appendChild(document.createTextNode('No passport data'));
+        $infoBox.append(document.createTextNode('No passport data'));
       }
     }
 
-    btn.addEventListener('click', async () => {
+    $btn.on('click', async () => {
       let data = null;
-      const bookingId = input.value.trim();
+      const bookingId = $input.val().trim();
       if (bookingId) {
         try {
           const url = `https://cp.gth.com.ua/plugin/getdata?id=${encodeURIComponent(bookingId)}`;
@@ -319,18 +307,15 @@
         }
       }
       displayData(data);
-      infoBox.style.display = 'block';
-      toggleInfo.textContent = '\u25B2';
+      $infoBox.show();
+      $toggleInfo.text('\u25B2');
       onClick(data);
     });
 
-    controls.appendChild(input);
-    controls.appendChild(btn);
-    controls.appendChild(toggleInfo);
+    $controls.append($input, $btn, $toggleInfo);
 
-    container.appendChild(infoBox);
-    container.appendChild(controls);
-    document.body.appendChild(container);
+    $container.append($infoBox, $controls);
+    $('body').append($container);
   }
 
   window.autofillCommon = {
