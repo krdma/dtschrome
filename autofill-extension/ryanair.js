@@ -5,6 +5,7 @@
     setValue,
     setDropdown,
     setGender,
+    getContactInfo,
     createButton
   } = window.autofillCommon;
 
@@ -22,6 +23,7 @@
 
   function fillRyanair(data) {
     const pax = data && data.passports ? data.passports : passengers;
+    const contact = getContactInfo(data || {});
     setRyanairTitles(pax[0]?.sex || 'MR');
     setRyanairGender();
     const firstInputs = document.querySelectorAll(
@@ -50,13 +52,13 @@
       document.querySelector(
         "ry-input-d[data-ref='contact-details__email'] input, input[type='email']"
       ),
-      data?.email || mainPassenger.email
+      contact.email || mainPassenger.email
     );
     setValue(
       document.querySelector(
         "ry-input-d[data-ref='contact-details__phone'] input, input[type='tel']"
       ),
-      data?.phone || mainPassenger.phone
+      contact.phone || mainPassenger.phone
     );
   }
 

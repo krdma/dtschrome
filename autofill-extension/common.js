@@ -125,6 +125,36 @@
     if (value != null) setDropdown(select, value);
   }
 
+  function getContactInfo(data) {
+    const result = { email: data?.email || null, phone: data?.phone || null };
+    const contacts = Array.isArray(data?.contact)
+      ? data.contact
+      : Array.isArray(data?.contacts)
+      ? data.contacts
+      : null;
+    if (contacts) {
+      for (const c of contacts) {
+        const type = (c.type || '').toLowerCase();
+        if (!result.email) {
+          if (c.email) {
+            result.email = c.email;
+          } else if (type.includes('mail') && c.value) {
+            result.email = c.value;
+          }
+        }
+        if (!result.phone) {
+          if (c.phone) {
+            result.phone = c.phone;
+          } else if (/phone|tel/.test(type) && c.value) {
+            result.phone = c.value;
+          }
+        }
+        if (result.email && result.phone) break;
+      }
+    }
+    return result;
+  }
+
   function createButton(onClick) {
     const container = document.createElement('div');
     Object.assign(container.style, {
@@ -188,6 +218,7 @@
     setDropdown,
     getMaleValue,
     setGender,
+    getContactInfo,
     createButton
   };
 })();
