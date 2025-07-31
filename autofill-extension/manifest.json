@@ -2,11 +2,14 @@
   "manifest_version": 3,
   "name": "Flight Booker Autofill",
   "description": "Autofills passenger and contact info on booking pages.",
-  "version": "1.0",
+  "version": "1.1",
   "action": {
     "default_title": "Autofill"
   },
-  "permissions": ["activeTab", "scripting"],
+  "permissions": [
+    "activeTab",
+    "scripting"
+  ],
   "host_permissions": [
     "https://cp.gth.com.ua/*"
   ],
@@ -15,45 +18,93 @@
   },
   "content_scripts": [
     {
-      "matches": ["*://*.ryanair.com/*"],
-        "js": ["lib/jquery.min.js", "common.js", "ryanair.js"],
+      "matches": [
+        "*://*.ryanair.com/*"
+      ],
+      "js": [
+        "lib/jquery.min.js",
+        "common.js",
+        "ryanair.js"
+      ],
       "run_at": "document_idle"
     },
     {
-      "matches": ["*://*.wizzair.com/*"],
-        "js": ["lib/jquery.min.js", "common.js", "wizzair.js"],
+      "matches": [
+        "*://*.wizzair.com/*"
+      ],
+      "js": [
+        "lib/jquery.min.js",
+        "common.js",
+        "wizzair.js"
+      ],
       "run_at": "document_idle"
     },
     {
-      "matches": ["*://*.hotelston.com/*"],
-        "js": ["lib/jquery.min.js", "common.js", "hotelston.js"],
+      "matches": [
+        "*://*.hotelston.com/*"
+      ],
+      "js": [
+        "lib/jquery.min.js",
+        "common.js",
+        "hotelston.js"
+      ],
       "run_at": "document_idle"
     },
     {
-      "matches": ["*://app.hotelbeds.com/*"],
-        "js": ["lib/jquery.min.js", "common.js", "hotelbeds.js"],
+      "matches": [
+        "*://app.hotelbeds.com/*"
+      ],
+      "js": [
+        "lib/jquery.min.js",
+        "common.js",
+        "hotelbeds.js"
+      ],
       "run_at": "document_idle"
     },
     {
-      "matches": ["*://b2bdirect.itravex.es/*"],
-        "js": ["lib/jquery.min.js", "common.js", "itravex.js"],
+      "matches": [
+        "*://b2bdirect.itravex.es/*"
+      ],
+      "js": [
+        "lib/jquery.min.js",
+        "common.js",
+        "itravex.js"
+      ],
       "run_at": "document_idle"
     },
     {
-      "matches": ["*://bedbank.viajesolympia.com/*"],
-        "js": ["lib/jquery.min.js", "common.js", "viajesolympia.js"],
+      "matches": [
+        "*://bedbank.viajesolympia.com/*"
+      ],
+      "js": [
+        "lib/jquery.min.js",
+        "common.js",
+        "viajesolympia.js"
+      ],
       "run_at": "document_idle"
     },
     {
-      "matches": ["<all_urls>"],
+      "matches": [
+        "<all_urls>"
+      ],
       "exclude_matches": [
         "*://*.ryanair.com/*",
         "*://*.wizzair.com/*",
         "*://*.hotelston.com/*",
         "*://app.hotelbeds.com/*"
       ],
-        "js": ["lib/jquery.min.js", "common.js", "generic.js"],
+      "js": [
+        "lib/jquery.min.js",
+        "common.js",
+        "generic.js"
+      ],
       "run_at": "document_idle"
     }
-  ]
+  ],
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
 }

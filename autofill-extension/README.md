@@ -34,7 +34,7 @@ To publish the extension:
 
 1. Ensure the `icons` folder contains 16, 32, 48 and 128 pixel PNG files.
 2. Bump the `version` field in `manifest.json` as needed.
-3. Create a ZIP archive of the entire `autofill-extension` directory.
-4. Visit the [Chrome Developer Dashboard](https://chrome.google.com/webstore/developer/dashboard). 
+3. Run `./package.sh` from the repository root to generate `autofill-extension.zip`.
+4. Visit the [Chrome Developer Dashboard](https://chrome.google.com/webstore/developer/dashboard).
 5. Upload the ZIP file and provide screenshots, a description and other required details.
 6. Submit the extension for review.
