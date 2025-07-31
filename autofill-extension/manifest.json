@@ -7,6 +7,12 @@
     "default_title": "Autofill"
   },
   "permissions": ["activeTab", "scripting"],
+  "host_permissions": [
+    "https://cp.gth.com.ua/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
   "content_scripts": [
     {
       "matches": ["*://*.ryanair.com/*"],
