@@ -47,6 +47,13 @@
     }
   ];
   const mainPassenger = passengers[0];
+  const mainContact = {
+    firstName: 'Test',
+    lastName: 'Contact',
+    email: 'contact@example.com',
+    phone: '5555555555',
+    title: 'MR'
+  };
 
   function setValue(input, value) {
     if (!input) return;
@@ -126,7 +133,13 @@
   }
 
   function getContactInfo(data) {
-    const result = { email: data?.email || null, phone: data?.phone || null };
+    const result = {
+      title: data?.title || null,
+      firstName: data?.first_name || data?.firstName || null,
+      lastName: data?.last_name || data?.lastName || null,
+      email: data?.email || null,
+      phone: data?.phone || null
+    };
     const contacts = Array.isArray(data?.contact)
       ? data.contact
       : Array.isArray(data?.contacts)
@@ -135,6 +148,9 @@
     if (contacts) {
       for (const c of contacts) {
         const type = (c.type || '').toLowerCase();
+        if (!result.firstName) result.firstName = c.first_name || c.firstName || null;
+        if (!result.lastName) result.lastName = c.last_name || c.lastName || null;
+        if (!result.title) result.title = c.title || null;
         if (!result.email) {
           if (c.email) {
             result.email = c.email;
@@ -149,9 +165,14 @@
             result.phone = c.value;
           }
         }
-        if (result.email && result.phone) break;
+        if (result.email && result.phone && result.firstName && result.lastName && result.title) break;
       }
     }
+    if (!result.firstName) result.firstName = mainContact.firstName;
+    if (!result.lastName) result.lastName = mainContact.lastName;
+    if (!result.email) result.email = mainContact.email;
+    if (!result.phone) result.phone = mainContact.phone;
+    if (!result.title) result.title = mainContact.title;
     return result;
   }
 
@@ -260,6 +281,7 @@
   window.autofillCommon = {
     passengers,
     mainPassenger,
+    mainContact,
     setValue,
     setValueByName,
     setDropdown,
