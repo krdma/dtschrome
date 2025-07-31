@@ -7,12 +7,13 @@
     createButton
   } = window.autofillCommon;
 
-  const skipContainer = '.hotel__body__customers__items';
+  const skipContainerSelector = '.hotel__body__customers__items';
 
   function selectOutside(selector) {
+    const skipContainer = document.querySelector(skipContainerSelector);
     const elements = document.querySelectorAll(selector);
     for (const el of elements) {
-      if (!el.closest(skipContainer)) {
+      if (!skipContainer || !skipContainer.contains(el)) {
         return el;
       }
     }
