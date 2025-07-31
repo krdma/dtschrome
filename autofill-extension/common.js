@@ -243,6 +243,51 @@
       cursor: 'pointer'
     });
 
+    function displayData(data) {
+      infoBox.innerHTML = '';
+      if (!data) {
+        infoBox.textContent = 'No data';
+        return;
+      }
+      const orderId = data.id || data.orderId || data.order_id || data.booking_id || '';
+      if (orderId) {
+        const header = document.createElement('div');
+        header.textContent = `\u2116 заказа: ${orderId}`;
+        header.style.fontWeight = 'bold';
+        header.style.marginBottom = '5px';
+        infoBox.appendChild(header);
+      }
+      if (Array.isArray(data.passports) && data.passports.length) {
+        const table = document.createElement('table');
+        table.style.borderCollapse = 'collapse';
+        table.style.width = '100%';
+        const thead = document.createElement('thead');
+        thead.innerHTML = '<tr><th>Имя</th><th>Фамилия</th><th>Паспорт</th><th>ДР</th></tr>';
+        Array.from(thead.querySelectorAll('th')).forEach(th => {
+          th.style.border = '1px solid #ccc';
+          th.style.padding = '2px 4px';
+        });
+        table.appendChild(thead);
+        const tbody = document.createElement('tbody');
+        data.passports.forEach(p => {
+          const row = document.createElement('tr');
+          row.innerHTML = `<td>${p.first_name || p.firstName || ''}</td>` +
+            `<td>${p.last_name || p.lastName || ''}</td>` +
+            `<td>${p.passport_number || p.passportNumber || ''}</td>` +
+            `<td>${(p.birthday || p.dob || '').split(' ')[0]}</td>`;
+          Array.from(row.children).forEach(td => {
+            td.style.border = '1px solid #ccc';
+            td.style.padding = '2px 4px';
+          });
+          tbody.appendChild(row);
+        });
+        table.appendChild(tbody);
+        infoBox.appendChild(table);
+      } else {
+        infoBox.appendChild(document.createTextNode('No passport data'));
+      }
+    }
+
     btn.addEventListener('click', async () => {
       let data = null;
       const bookingId = input.value.trim();
@@ -259,11 +304,7 @@
           console.error('Failed to fetch booking data', err);
         }
       }
-      if (data) {
-        infoBox.textContent = JSON.stringify(data, null, 2);
-      } else {
-        infoBox.textContent = 'No data';
-      }
+      displayData(data);
       infoBox.style.display = 'block';
       toggleInfo.textContent = '\u25B2';
       onClick(data);
