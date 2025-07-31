@@ -16,32 +16,32 @@
   "content_scripts": [
     {
       "matches": ["*://*.ryanair.com/*"],
-      "js": ["common.js", "ryanair.js"],
+        "js": ["lib/jquery.min.js", "common.js", "ryanair.js"],
       "run_at": "document_idle"
     },
     {
       "matches": ["*://*.wizzair.com/*"],
-      "js": ["common.js", "wizzair.js"],
+        "js": ["lib/jquery.min.js", "common.js", "wizzair.js"],
       "run_at": "document_idle"
     },
     {
       "matches": ["*://*.hotelston.com/*"],
-      "js": ["common.js", "hotelston.js"],
+        "js": ["lib/jquery.min.js", "common.js", "hotelston.js"],
       "run_at": "document_idle"
     },
     {
       "matches": ["*://app.hotelbeds.com/*"],
-      "js": ["common.js", "hotelbeds.js"],
+        "js": ["lib/jquery.min.js", "common.js", "hotelbeds.js"],
       "run_at": "document_idle"
     },
     {
       "matches": ["*://b2bdirect.itravex.es/*"],
-      "js": ["common.js", "itravex.js"],
+        "js": ["lib/jquery.min.js", "common.js", "itravex.js"],
       "run_at": "document_idle"
     },
     {
       "matches": ["*://bedbank.viajesolympia.com/*"],
-      "js": ["common.js", "viajesolympia.js"],
+        "js": ["lib/jquery.min.js", "common.js", "viajesolympia.js"],
       "run_at": "document_idle"
     },
     {
@@ -52,7 +52,7 @@
         "*://*.hotelston.com/*",
         "*://app.hotelbeds.com/*"
       ],
-      "js": ["common.js", "generic.js"],
+        "js": ["lib/jquery.min.js", "common.js", "generic.js"],
       "run_at": "document_idle"
     }
   ]
