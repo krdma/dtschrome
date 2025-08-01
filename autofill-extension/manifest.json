@@ -74,6 +74,17 @@
     },
     {
       "matches": [
+        "*://b2dmc.w2m.travel/*"
+      ],
+      "js": [
+        "lib/jquery.min.js",
+        "common.js",
+        "w2m.js"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
         "*://bedbank.viajesolympia.com/*"
       ],
       "js": [
