@@ -96,6 +96,17 @@
     },
     {
       "matches": [
+        "*://*.kiwi.com/*"
+      ],
+      "js": [
+        "lib/jquery.min.js",
+        "common.js",
+        "kiwi.js"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
         "<all_urls>"
       ],
       "exclude_matches": [
