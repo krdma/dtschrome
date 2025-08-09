@@ -295,7 +295,7 @@
       const bookingId = $input.val().trim();
       if (bookingId) {
         try {
-          const url = `https://cp.gth.com.ua/plugin/getdata?id=${encodeURIComponent(bookingId)}`;
+          const url = `https://dshb.gth.com.ua/plugin/getdata?id=${encodeURIComponent(bookingId)}`;
           const res = await chrome.runtime.sendMessage({ action: 'fetch', url });
           if (res && res.ok) {
             data = res.data;
