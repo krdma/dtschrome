@@ -35,9 +35,11 @@
     setValue(document.querySelector("input[type='tel']"), contact.phone);
   }
 
+  const init = () => setTimeout(() => createButton(fillKiwi), 10000);
+
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => createButton(fillKiwi));
+    document.addEventListener('DOMContentLoaded', init);
   } else {
-    createButton(fillKiwi);
+    init();
   }
 })();
