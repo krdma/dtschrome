@@ -107,13 +107,27 @@
     },
     {
       "matches": [
+        "*://*.chartershop.com.ua/*",
+        "*://*.chartershop.eu/*"
+      ],
+      "js": [
+        "lib/jquery.min.js",
+        "common.js",
+        "chartershop.js"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
         "<all_urls>"
       ],
       "exclude_matches": [
         "*://*.ryanair.com/*",
         "*://*.wizzair.com/*",
         "*://*.hotelston.com/*",
-        "*://app.hotelbeds.com/*"
+        "*://app.hotelbeds.com/*",
+        "*://*.chartershop.com.ua/*",
+        "*://*.chartershop.eu/*"
       ],
       "js": [
         "lib/jquery.min.js",
