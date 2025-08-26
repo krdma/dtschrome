@@ -129,7 +129,7 @@
       ],
       "run_at": "document_idle"
     },
-     {
+    {
       "matches": [
         "*://*.goglobal.travel/*"
       ],
@@ -137,6 +137,17 @@
         "lib/jquery.min.js",
         "common.js",
         "goglobal.js"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "*://*.tbohotels.com/*"
+      ],
+      "js": [
+        "lib/jquery.min.js",
+        "common.js",
+        "tbohotels.js"
       ],
       "run_at": "document_idle"
     },
