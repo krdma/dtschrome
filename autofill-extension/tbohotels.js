@@ -18,7 +18,7 @@
       setValue(first, p.first_name || p.firstName);
       setValue(last, p.last_name || p.lastName);
       if (title) {
-        const t = p.gender === 'FEMALE' ? 'Ms' : 'Mr';
+        const t = p.gender === 'MS' ? 'Ms' : 'Mr';
         setDropdown(title, t);
       }
     });
@@ -31,10 +31,10 @@
       if (m) setValue(cc, m[0]);
     }
 
-    setDropdown(document.getElementById('chkInHrs'), '14');
-    setDropdown(document.getElementById('chkInMin'), '00');
-    setDropdown(document.getElementById('chkOutHrs'), '11');
-    setDropdown(document.getElementById('chkOutMin'), '00');
+    // setDropdown(document.getElementById('chkInHrs'), '14');
+    // setDropdown(document.getElementById('chkInMin'), '00');
+    // setDropdown(document.getElementById('chkOutHrs'), '11');
+    // setDropdown(document.getElementById('chkOutMin'), '00');
 
     const save = document.getElementById('saveCustomerName');
     if (save) {
