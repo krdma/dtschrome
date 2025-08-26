@@ -1,4 +1,4 @@
-(() => {
+((jQuery) => {
   const {
     passengers,
     setValue,
@@ -8,6 +8,7 @@
   } = window.autofillCommon;
 
   function fillLuxuryTravel(data) {
+    jQuery('.selectBox').selectBox('destroy');
     const pax = data && data.passports ? data.passports : passengers;
     const contact = getContactInfo(data || {});
 
@@ -18,7 +19,7 @@
       const last = p.last_name || p.lastName || '';
       const gender = (p.gender || p.sex || '').toUpperCase();
       const titleVal = /FEMALE|MS|MISS|MRS|F/.test(gender) ? '1' : '0';
-
+     
       setDropdown(row.querySelector("select[name='salutation']"), titleVal);
       setValue(row.querySelector("input[name='first']"), first);
       setValue(row.querySelector("input[name='last']"), last);
@@ -43,4 +44,4 @@
   } else {
     createButton(fillLuxuryTravel);
   }
-})();
+})(jQuery);
