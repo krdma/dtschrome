@@ -1,4 +1,4 @@
-((jQuery) => {
+(() => {
   const {
     passengers,
     setValue,
@@ -7,8 +7,18 @@
     createButton
   } = window.autofillCommon;
 
+  function destroySelectBoxes() {
+    document.querySelectorAll('select.selectBox').forEach(select => {
+      const prev = select.previousElementSibling;
+      if (prev && prev.classList && prev.classList.contains('selectBox')) {
+        prev.remove();
+      }
+      select.style.display = '';
+    });
+  }
+
   function fillLuxuryTravel(data) {
-    jQuery('.selectBox').selectBox('destroy');
+    destroySelectBoxes();
     const pax = data && data.passports ? data.passports : passengers;
     const contact = getContactInfo(data || {});
 
@@ -44,4 +54,4 @@
   } else {
     createButton(fillLuxuryTravel);
   }
-})(jQuery);
+})();
