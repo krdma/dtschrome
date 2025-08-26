@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Flight Booker Autofill",
   "description": "Autofills passenger and contact info on booking pages.",
-  "version": "1.3",
+  "version": "1.4",
   "action": {
     "default_title": "Autofill"
   },
@@ -119,6 +119,17 @@
     },
     {
       "matches": [
+        "*://*.luxurytraveldmc.com/*"
+      ],
+      "js": [
+        "lib/jquery.min.js",
+        "common.js",
+        "luxurytraveldmc.js"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
         "<all_urls>"
       ],
       "exclude_matches": [
@@ -127,7 +138,8 @@
         "*://*.hotelston.com/*",
         "*://app.hotelbeds.com/*",
         "*://*.chartershop.com.ua/*",
-        "*://*.chartershop.eu/*"
+        "*://*.chartershop.eu/*",
+        "*://*.luxurytraveldmc.com/*"
       ],
       "js": [
         "lib/jquery.min.js",
