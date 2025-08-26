@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Flight Booker Autofill",
   "description": "Autofills passenger and contact info on booking pages.",
-  "version": "1.3",
+  "version": "1.4",
   "action": {
     "default_title": "Autofill"
   },
