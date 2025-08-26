@@ -125,6 +125,18 @@
         "lib/jquery.min.js",
         "common.js",
         "luxurytraveldmc.js"
+
+      ],
+      "run_at": "document_idle"
+    },
+     {
+      "matches": [
+        "*://*.goglobal.travel/*"
+      ],
+      "js": [
+        "lib/jquery.min.js",
+        "common.js",
+        "goglobal.js"
       ],
       "run_at": "document_idle"
     },
