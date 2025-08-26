@@ -119,6 +119,17 @@
     },
     {
       "matches": [
+        "*://*.goglobal.travel/*"
+      ],
+      "js": [
+        "lib/jquery.min.js",
+        "common.js",
+        "goglobal.js"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
         "<all_urls>"
       ],
       "exclude_matches": [
