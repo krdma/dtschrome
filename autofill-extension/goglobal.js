@@ -29,7 +29,7 @@
       if ((p.type || '').toUpperCase().startsWith('CH')) {
         title = 'CHD';
       } else {
-        title = p.gender === 'FEMALE' ? 'MS.' : 'MR.';
+        title = p.gender === 'MS' ? 'MS.' : 'MR.';
       }
       setDropdown(sel, title);
     });
