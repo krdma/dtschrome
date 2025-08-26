@@ -119,6 +119,18 @@
     },
     {
       "matches": [
+        "*://*.luxurytraveldmc.com/*"
+      ],
+      "js": [
+        "lib/jquery.min.js",
+        "common.js",
+        "luxurytraveldmc.js"
+
+      ],
+      "run_at": "document_idle"
+    },
+     {
+      "matches": [
         "*://*.goglobal.travel/*"
       ],
       "js": [
@@ -138,7 +150,8 @@
         "*://*.hotelston.com/*",
         "*://app.hotelbeds.com/*",
         "*://*.chartershop.com.ua/*",
-        "*://*.chartershop.eu/*"
+        "*://*.chartershop.eu/*",
+        "*://*.luxurytraveldmc.com/*"
       ],
       "js": [
         "lib/jquery.min.js",
