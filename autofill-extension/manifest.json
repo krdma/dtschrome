@@ -183,6 +183,15 @@
         "common.js",
         "khalidiah.js"
       ],
+          {
+      "matches": [
+        "*://mresort.toursupport.ru/*"
+      ],
+      "js": [
+        "lib/jquery.min.js",
+        "common.js",
+        "mresort.js"
+      ],
       "run_at": "document_idle"
     },
     {
@@ -198,8 +207,10 @@
         "*://*.chartershop.eu/*",
         "*://*.luxurytraveldmc.com/*",
         "*://*.joyce-tours.com/*",
+
         "*://online.khalidiah.ae/*",
-        "*://smartsys.dyndns.biz/*"
+        "*://smartsys.dyndns.biz/*",
+        "*://mresort.toursupport.ru/*"
       ],
       "js": [
         "lib/jquery.min.js",
