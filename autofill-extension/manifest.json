@@ -176,6 +176,17 @@
     },
     {
       "matches": [
+        "*://mresort.toursupport.ru/*"
+      ],
+      "js": [
+        "lib/jquery.min.js",
+        "common.js",
+        "mresort.js"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
         "<all_urls>"
       ],
       "exclude_matches": [
@@ -187,7 +198,8 @@
         "*://*.chartershop.eu/*",
         "*://*.luxurytraveldmc.com/*",
         "*://*.joyce-tours.com/*",
-        "*://smartsys.dyndns.biz/*"
+        "*://smartsys.dyndns.biz/*",
+        "*://mresort.toursupport.ru/*"
       ],
       "js": [
         "lib/jquery.min.js",
