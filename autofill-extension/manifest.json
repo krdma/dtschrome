@@ -165,6 +165,17 @@
     },
     {
       "matches": [
+        "*://*.joyce-tours.com/*"
+      ],
+      "js": [
+        "lib/jquery.min.js",
+        "common.js",
+        "joyce-tours.js"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
         "<all_urls>"
       ],
       "exclude_matches": [
@@ -175,6 +186,7 @@
         "*://*.chartershop.com.ua/*",
         "*://*.chartershop.eu/*",
         "*://*.luxurytraveldmc.com/*",
+        "*://*.joyce-tours.com/*",
         "*://smartsys.dyndns.biz/*"
       ],
       "js": [
