@@ -153,6 +153,18 @@
     },
     {
       "matches": [
+        "http://smartsys.dyndns.biz/*",
+        "https://smartsys.dyndns.biz/*"
+      ],
+      "js": [
+        "lib/jquery.min.js",
+        "common.js",
+        "smartsys.js"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
         "<all_urls>"
       ],
       "exclude_matches": [
@@ -162,7 +174,8 @@
         "*://app.hotelbeds.com/*",
         "*://*.chartershop.com.ua/*",
         "*://*.chartershop.eu/*",
-        "*://*.luxurytraveldmc.com/*"
+        "*://*.luxurytraveldmc.com/*",
+        "*://smartsys.dyndns.biz/*"
       ],
       "js": [
         "lib/jquery.min.js",
