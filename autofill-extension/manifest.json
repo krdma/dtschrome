@@ -176,6 +176,17 @@
     },
     {
       "matches": [
+        "*://online.khalidiah.ae/*"
+      ],
+      "js": [
+        "lib/jquery.min.js",
+        "common.js",
+        "khalidiah.js"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
         "<all_urls>"
       ],
       "exclude_matches": [
@@ -187,6 +198,7 @@
         "*://*.chartershop.eu/*",
         "*://*.luxurytraveldmc.com/*",
         "*://*.joyce-tours.com/*",
+        "*://online.khalidiah.ae/*",
         "*://smartsys.dyndns.biz/*"
       ],
       "js": [
