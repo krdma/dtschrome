@@ -18,7 +18,7 @@
       setValue(first, p.first_name || p.firstName);
       setValue(last, p.last_name || p.lastName);
       if (title) {
-        const t = p.gender === 'MS' ? 'Ms' : 'Mr';
+        const t = p.sex === 'MS' ? 'Ms' : 'Mr';
         setDropdown(title, t);
       }
     });

@@ -7,11 +7,21 @@
     createButton
   } = window.autofillCommon;
 
-  function formatDate(d) {
-    if (!d) return '';
-    if (d.includes('.')) return d;
-    const [year, month, day] = d.split('-');
-    return `${day.padStart(2, '0')}.${month.padStart(2, '0')}.${year}`;
+  // function formatDate(d) {
+  //   if (!d) return '';
+  //   if (d.includes('.')) return d;
+  //   const [year, month, day] = d.split('-');
+  //   return `${day.padStart(2, '0')}.${month.padStart(2, '0')}.${year}`;
+  // }
+
+    function formatDate(value) {
+    if (!value) return '';
+    const datePart = value.split('T')[0].split(' ')[0];
+    let m = datePart.match(/^(\d{4})[-/](\d{2})[-/](\d{2})$/);
+    if (m) return `${m[3]}.${m[2]}.${m[1]}`;
+    m = datePart.match(/^(\d{2})[./-](\d{2})[./-](\d{4})$/);
+    if (m) return `${m[1]}.${m[2]}.${m[3]}`;
+    return datePart;
   }
 
   function fillSmartSys(data) {
@@ -23,17 +33,18 @@
       setValue(block.querySelector('.samo-tourist-name'), p.first_name || p.firstName);
       setValue(block.querySelector('.samo-tourist-surname'), p.last_name || p.lastName);
       const dob = p.birthday || p.dob;
+      console.log(formatDate(dob));
       setValue(block.querySelector('.samo-born-date'), formatDate(dob));
       setValue(block.querySelector('.samo-tourist-phone'), p.phone || contact.phone);
-      setValue(block.querySelector('.samo-passport-serie'), p.passport_series || p.passportSerie || '');
-      setValue(block.querySelector('.samo-passport-number'), p.passport_number || p.passportNumber || '');
-      setDropdown(block.querySelector('.samo-passport-state'), p.citizenship || p.nationality || '');
+      setValue(block.querySelector('.samo-passport-serie'), p.ps_seria || p.passportSerie || '');
+      setValue(block.querySelector('.samo-passport-number'), p.ps_number || p.passportNumber || '');
+      setDropdown(block.querySelector('.samo-passport-state'), p.citizenship || p.nationality || '13');
       const genderInputs = block.querySelectorAll('.gender');
       const gender = (p.gender || p.sex || '').toUpperCase();
       if (genderInputs.length) {
         const maleInput = genderInputs[0];
         const femaleInput = genderInputs[1];
-        const target = gender.startsWith('M') ? maleInput : femaleInput;
+        const target = gender.startsWith('MR') ? maleInput : femaleInput;
         if (target) {
           target.checked = true;
           target.dispatchEvent(new Event('change', { bubbles: true }));
