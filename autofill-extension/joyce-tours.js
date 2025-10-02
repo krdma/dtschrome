@@ -30,7 +30,7 @@
       setValue(block.querySelector('.samo-tourist-phone'), p.phone || contact.phone);
       setValue(block.querySelector('.samo-passport-serie'), p.ps_seria || p.passportSerie || '');
       setValue(block.querySelector('.samo-passport-number'), p.ps_number || p.passportNumber || '');
-      setDropdown(block.querySelector('.samo-passport-state'), p.citizenship || p.nationality || '13');
+      setDropdown(block.querySelector('.samo-passport-state'), p.citizenship || p.nationality || '5');
       const genderInputs = block.querySelectorAll('.gender');
       const gender = (p.gender || p.sex || '').toUpperCase();
       if (genderInputs.length) {

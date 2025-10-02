@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Flight Booker Autofill",
   "description": "Autofills passenger and contact info on booking pages.",
-  "version": "1.4",
+  "version": "1.5",
   "action": {
     "default_title": "Autofill"
   },
@@ -125,7 +125,6 @@
         "lib/jquery.min.js",
         "common.js",
         "luxurytraveldmc.js"
-
       ],
       "run_at": "document_idle"
     },
@@ -183,7 +182,9 @@
         "common.js",
         "khalidiah.js"
       ],
-          {
+      "run_at": "document_idle"
+    },
+    {
       "matches": [
         "*://mresort.toursupport.ru/*"
       ],
@@ -207,7 +208,6 @@
         "*://*.chartershop.eu/*",
         "*://*.luxurytraveldmc.com/*",
         "*://*.joyce-tours.com/*",
-
         "*://online.khalidiah.ae/*",
         "*://smartsys.dyndns.biz/*",
         "*://mresort.toursupport.ru/*"
