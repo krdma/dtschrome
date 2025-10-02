@@ -44,7 +44,7 @@
   function setGenderField(field, passenger) {
     if (!field || !passenger) return;
     const gender = (passenger.gender || passenger.sex || '').toString().toUpperCase();
-    const female = /(FEMALE|F)/.test(gender);
+    const female = /(MS|F)/.test(gender);
     const targetValue = female ? 'Ж' : 'М';
     const radio = field.querySelector(`input[value='${targetValue}']`);
     if (radio) {
