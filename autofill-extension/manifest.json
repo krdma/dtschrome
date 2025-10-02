@@ -197,6 +197,17 @@
     },
     {
       "matches": [
+        "*://*.drct.aero/*"
+      ],
+      "js": [
+        "lib/jquery.min.js",
+        "common.js",
+        "drct.js"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
         "<all_urls>"
       ],
       "exclude_matches": [
@@ -210,7 +221,8 @@
         "*://*.joyce-tours.com/*",
         "*://online.khalidiah.ae/*",
         "*://smartsys.dyndns.biz/*",
-        "*://mresort.toursupport.ru/*"
+        "*://mresort.toursupport.ru/*",
+        "*://*.drct.aero/*"
       ],
       "js": [
         "lib/jquery.min.js",
