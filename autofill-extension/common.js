@@ -207,6 +207,16 @@
       cursor: 'pointer'
     });
 
+    function createSinglePassengerData(data, passenger, index) {
+      if (!passenger) return data;
+      const result = data ? { ...data } : {};
+      result.passports = [passenger];
+      result.passport = passenger;
+      result.selectedPassenger = passenger;
+      result.selectedPassengerIndex = index;
+      return result;
+    }
+
     function displayData(data) {
       $infoBox.empty();
       if (!data) {
@@ -222,20 +232,50 @@
       }
       if (Array.isArray(data.passports) && data.passports.length) {
         const $table = $('<table>').css({ borderCollapse: 'collapse', width: '100%' });
-        const $thead = $('<thead>').html('<tr><th>Пол</th><th>Имя</th><th>Фамилия</th><th>Паспорт</th><th>ДР</th></tr>');
-        $thead.find('th').css({ border: '1px solid #ccc', padding: '2px 4px' });
-        $table.append($thead);
+        const $theadRow = $('<tr>');
+        ['Пол', 'Имя', 'Фамилия', 'Паспорт', 'ДР', 'Действие'].forEach(text => {
+          $('<th>')
+            .text(text)
+            .css({ border: '1px solid #ccc', padding: '2px 4px', textAlign: 'left' })
+            .appendTo($theadRow);
+        });
+        $('<thead>').append($theadRow).appendTo($table);
         const $tbody = $('<tbody>');
-        data.passports.forEach(p => {
+        data.passports.forEach((p, index) => {
           const dob = formatDate(p.birthday || p.dob || '');
-          const $row = $('<tr>').html(
-            `<td>${p.gender || p.sex || ''}</td>` +
-            `<td>${p.first_name || p.firstName || ''}</td>` +
-            `<td>${p.last_name || p.lastName || ''}</td>` +
-            `<td>${p.passport_number || p.passportNumber || ''}</td>` +
-            `<td>${dob}</td>`
-          );
-          $row.children().css({ border: '1px solid #ccc', padding: '2px 4px' });
+          const $row = $('<tr>');
+          [
+            p.gender || p.sex || '',
+            p.first_name || p.firstName || '',
+            p.last_name || p.lastName || '',
+            p.passport_number || p.passportNumber || '',
+            dob
+          ].forEach(value => {
+            $('<td>')
+              .text(value)
+              .css({ border: '1px solid #ccc', padding: '2px 4px' })
+              .appendTo($row);
+          });
+
+          const $actionCell = $('<td>').css({ border: '1px solid #ccc', padding: '2px 4px' });
+          const $fillPassengerButton = $('<button type="button">Заполнить</button>');
+          $fillPassengerButton.css({
+            padding: '4px 8px',
+            borderRadius: '4px',
+            border: '1px solid #00aaff',
+            background: '#00aaff',
+            color: '#fff',
+            cursor: 'pointer'
+          });
+          $fillPassengerButton.on('click', () => {
+            const singlePassengerData = createSinglePassengerData(data, p, index);
+            $infoBox.show();
+            $toggleInfo.text('\u25B2');
+            onClick(singlePassengerData);
+          });
+          $actionCell.append($fillPassengerButton);
+          $row.append($actionCell);
+
           $tbody.append($row);
         });
         $table.append($tbody);
