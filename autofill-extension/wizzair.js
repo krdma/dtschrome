@@ -82,10 +82,7 @@
     const target = isFemale ? femaleInput : maleInput || femaleInput;
     if (!target) return;
     if (!target.checked) {
-      target.dispatchEvent(new MouseEvent('mousedown', { bubbles: true }));
-      target.click();
-      target.dispatchEvent(new MouseEvent('mouseup', { bubbles: true }));
-      target.dispatchEvent(new Event('change', { bubbles: true }));
+     target.checked = true;
     }
   }
 
