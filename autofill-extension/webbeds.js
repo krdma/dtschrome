@@ -15,12 +15,12 @@
     const type = (passenger?.type || '').toUpperCase();
     const gender = (passenger?.gender || passenger?.sex || '').toUpperCase();
     if (type.startsWith('CH')) {
-      return ['Child', 'CHD'];
+      return false;
     }
-    if (gender.startsWith('F')) {
-      return ['Ms', 'Mrs', 'Miss'];
+    if (gender=='MS') {
+      return ['Ms.'];
     }
-    return ['Mr'];
+    return ['Mr.'];
   }
 
   function setMuiSelectValue(trigger, titles) {
