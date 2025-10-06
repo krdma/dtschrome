@@ -141,6 +141,17 @@
     },
     {
       "matches": [
+        "*://book.webbeds.com/*"
+      ],
+      "js": [
+        "lib/jquery.min.js",
+        "common.js",
+        "webbeds.js"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
         "*://*.tbohotels.com/*"
       ],
       "js": [
@@ -222,6 +233,7 @@
         "*://online.khalidiah.ae/*",
         "*://smartsys.dyndns.biz/*",
         "*://mresort.toursupport.ru/*",
+        "*://book.webbeds.com/*",
         "*://*.drct.aero/*"
       ],
       "js": [
