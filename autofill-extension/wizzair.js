@@ -22,7 +22,12 @@
         element = sel;
       }
       if (!element) continue;
-      if (element.tagName === "SELECT") {
+
+      if (element.hasAttribute && element.hasAttribute('readonly')) {
+        element.removeAttribute('readonly');
+      }
+      if (element.tagName === 'SELECT') {
+
         setDropdown(element, value);
       } else {
         setValue(element, value);
@@ -141,6 +146,33 @@
         [year],
         idx
       );
+
+      if (day && month && year) {
+        const normalizedDay = day.toString().padStart(2, '0');
+        const normalizedMonth = month.toString().padStart(2, '0');
+        const shortDay = normalizedDay.replace(/^0/, '');
+        const shortMonth = normalizedMonth.replace(/^0/, '');
+        const combinedValues = [
+          `${normalizedDay}.${normalizedMonth}.${year}`,
+          `${shortDay}.${shortMonth}.${year}`,
+          `${year}-${normalizedMonth}-${normalizedDay}`,
+          `${year}-${shortMonth}-${shortDay}`,
+          `${shortDay}/${shortMonth}/${year}`,
+          `${normalizedDay}/${normalizedMonth}/${year}`
+        ];
+        fillFieldWithCandidates(
+          [
+            `#${prefix}`,
+            `[data-test='${prefix}'] input`,
+            `[data-test='${prefix}']`,
+            `input[data-test='${prefix}']`,
+            `input[name$='.${prefix}']`,
+            `input[name$='${prefix}']`
+          ],
+          combinedValues,
+          idx
+        );
+      }
     });
   }
 
