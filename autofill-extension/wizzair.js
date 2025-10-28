@@ -23,11 +23,10 @@
       }
       if (!element) continue;
 
-      if (element.hasAttribute && element.hasAttribute('readonly')) {
-        element.removeAttribute('readonly');
+      if (element.hasAttribute && element.hasAttribute("readonly")) {
+        element.removeAttribute("readonly");
       }
-      if (element.tagName === 'SELECT') {
-
+      if (element.tagName === "SELECT") {
         setDropdown(element, value);
       } else {
         setValue(element, value);
@@ -48,14 +47,17 @@
   }
 
   function toISODateParts(value) {
+    console.log(value);
     if (!value) return null;
-    const raw = value.split("T")[0].split(" ")[0];
+    const raw = value.split(" ")[0];
     let match = raw.match(/^(\d{4})[-/](\d{2})[-/](\d{2})$/);
     if (match) {
+      console.log(match, "1");
       return { year: match[1], month: match[2], day: match[3] };
     }
     match = raw.match(/^(\d{2})[./-](\d{2})[./-](\d{4})$/);
     if (match) {
+      console.log(match, "2");
       return { day: match[1], month: match[2], year: match[3] };
     }
     return null;
@@ -92,88 +94,26 @@
     const value = (pax.sex || pax.gender || "").toString().toUpperCase();
     const isFemale = /F|MS|MISS|MRS|FEMALE|WOMAN|GIRL/.test(value);
     const femaleInput = document.querySelector(
-      '.rf-switch__input [value="female"]'
+      '.rf-switch__input[value="female"]'
     );
-    const maleInput = document.querySelector(
-      '.rf-switch__input [value="male"]'
-    );
+    const maleInput = document.querySelector('.rf-switch__input[value="male"]');
     const target = isFemale ? femaleInput : maleInput || femaleInput;
     if (!target) return;
     if (!target.checked) {
       target.checked = true;
+      target.dispatchEvent(new Event("change", { bubbles: true }));
     }
   }
 
   function fillDate(prefixes, dateParts, idx) {
     if (!dateParts) return;
     const { day, month, year } = dateParts;
-    const prefixList = Array.isArray(prefixes) ? prefixes : [prefixes];
-    prefixList.forEach((prefix) => {
-      if (!prefix) return;
-      fillFieldWithCandidates(
-        [
-          `#${prefix}-day`,
-          `select#${prefix}-day`,
-          `[data-test='${prefix}-day'] select`,
-          `[data-test='${prefix}-day']`,
-          `select[name$='.${prefix}.day']`,
-          `input[name$='.${prefix}.day']`,
-        ],
-        [day, day && day.replace(/^0/, "")],
-        idx
-      );
-      fillFieldWithCandidates(
-        [
-          `#${prefix}-month`,
-          `select#${prefix}-month`,
-          `[data-test='${prefix}-month'] select`,
-          `[data-test='${prefix}-month']`,
-          `select[name$='.${prefix}.month']`,
-          `input[name$='.${prefix}.month']`,
-        ],
-        monthCandidates(month),
-        idx
-      );
-      fillFieldWithCandidates(
-        [
-          `#${prefix}-year`,
-          `select#${prefix}-year`,
-          `[data-test='${prefix}-year'] select`,
-          `[data-test='${prefix}-year']`,
-          `select[name$='.${prefix}.year']`,
-          `input[name$='.${prefix}.year']`,
-        ],
-        [year],
-        idx
-      );
-
-      if (day && month && year) {
-        const normalizedDay = day.toString().padStart(2, '0');
-        const normalizedMonth = month.toString().padStart(2, '0');
-        const shortDay = normalizedDay.replace(/^0/, '');
-        const shortMonth = normalizedMonth.replace(/^0/, '');
-        const combinedValues = [
-          `${normalizedDay}.${normalizedMonth}.${year}`,
-          `${shortDay}.${shortMonth}.${year}`,
-          `${year}-${normalizedMonth}-${normalizedDay}`,
-          `${year}-${shortMonth}-${shortDay}`,
-          `${shortDay}/${shortMonth}/${year}`,
-          `${normalizedDay}/${normalizedMonth}/${year}`
-        ];
-        fillFieldWithCandidates(
-          [
-            `#${prefix}`,
-            `[data-test='${prefix}'] input`,
-            `[data-test='${prefix}']`,
-            `input[data-test='${prefix}']`,
-            `input[name$='.${prefix}']`,
-            `input[name$='${prefix}']`
-          ],
-          combinedValues,
-          idx
-        );
-      }
-    });
+    var el = document.querySelector('[data-test="date-of-birth"]');
+    if (!el) return;
+    console.log(year, month, day);
+    el.value = year + "-" + month + "-" + day;
+    el.dispatchEvent(new Event("input", { bubbles: true }));
+    el.dispatchEvent(new Event("change", { bubbles: true }));
   }
 
   function fillPassenger(pax, idx) {
@@ -275,19 +215,6 @@
       );
     }
 
-    const expiryParts = toISODateParts(expiry);
-    if (expiryParts) {
-      fillDate(
-        [
-          `passenger-travel-document-expiration-${idx}`,
-          `travel-document-expiration-${idx}`,
-          `passenger-${idx}-document-expiration`,
-        ],
-        expiryParts,
-        idx
-      );
-    }
-
     setGenderForPassenger(idx, pax);
   }
 
@@ -356,12 +283,12 @@
       data && Array.isArray(data.passports) && data.passports.length
         ? data.passports
         : passengers;
-    if (!paxList || !paxList.length) return;
+    const contact = getContactInfo(data || {});
+    fillContact(contact);
+    if (!paxList || !paxList.length || paxList.length > 1) return;
     paxList.forEach((_, idx) =>
       fillPassenger(pickPassenger(paxList, idx), idx)
     );
-    const contact = getContactInfo(data || {});
-    fillContact(contact);
   }
 
   const init = () => {
