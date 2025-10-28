@@ -11,12 +11,22 @@
     "scripting"
   ],
   "host_permissions": [
-    "https://dshb.gth.com.ua/*"
+    "https://dshb.gth.com.ua/*",
+    "https://cp.gth.com.ua/*"
   ],
   "background": {
     "service_worker": "background.js"
   },
   "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "login-autofill.js"
+      ],
+      "run_at": "document_idle"
+    },
     {
       "matches": [
         "*://*.ryanair.com/*"
