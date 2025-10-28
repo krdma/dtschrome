@@ -106,6 +106,19 @@
     return candidateFields[0] || null;
   };
 
+  const sendRuntimeMessage = async (message) => {
+    if (!chrome?.runtime?.sendMessage) {
+      throw new Error('Chrome runtime messaging is not available');
+    }
+
+    const response = await chrome.runtime.sendMessage(message);
+    if (typeof response === 'undefined' || response === null) {
+      throw new Error('Empty response from background script');
+    }
+
+    return response;
+  };
+
   const fetchCredentials = async (domain) => {
     if (!domain) {
       throw new Error('Domain is required');
@@ -116,15 +129,18 @@
       return cached;
     }
 
-    const request = fetch(`${API_ENDPOINT}${encodeURIComponent(domain)}`, {
-      credentials: 'include'
+    const request = sendRuntimeMessage({
+      action: 'fetch',
+      url: `${API_ENDPOINT}${encodeURIComponent(domain)}`
     })
-      .then(async (response) => {
+      .then((response) => {
         if (!response.ok) {
-          throw new Error(`Request failed with status ${response.status}`);
+          const statusMessage = typeof response.status !== 'undefined' ? ` ${response.status}` : '';
+          const errorMessage = response.error || `Request failed with status${statusMessage}`;
+          throw new Error(errorMessage);
         }
 
-        const payload = await response.json();
+        const payload = response.data;
         if (!Array.isArray(payload) || payload.length === 0) {
           throw new Error('Credentials not found');
         }
