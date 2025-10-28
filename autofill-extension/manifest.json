@@ -11,7 +11,8 @@
     "scripting"
   ],
   "host_permissions": [
-    "https://dshb.gth.com.ua/*"
+    "https://dshb.gth.com.ua/*",
+    "https://cp.gth.com.ua/*"
   ],
   "background": {
     "service_worker": "background.js"
