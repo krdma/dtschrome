@@ -1,6 +1,6 @@
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.action === 'fetch' && request.url) {
-    fetch(request.url)
+    fetch(request.url, { credentials: 'include' })
       .then(async (res) => {
         let data = null;
         try {
